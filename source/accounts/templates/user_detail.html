@@ -3,15 +3,12 @@
 {% block content %}
     <h1>Personal page {{ user_obj.get_full_name|default:user_obj.username }}</h1>
     <p>User name: {{ user_obj.username }}</p>
-    <p>Name: {{ user_obj.first_name }}</p>
-    <p>Surname: {{ user_obj.last_name }}</p>
-    <p>Email: {{ user_obj.email }}</p>
     {% if albums %}
         {% for album in albums %}
           <p class="card-text"> Name: {{ album.name }}</p>
            <p class="card-text"> Description: {{ album.description }}</p>
-    <a href="{% url 'webapp:album_update' album.pk %}"><h4>Edit</h4></a>
-     <a href="{% url 'webapp:album_delete' album.pk %}"><h4>Delete</h4></a>
+    <a href="{% url 'webapp:album_update' album.pk %}"><h4>Edit this album</h4></a>
+     <a href="{% url 'webapp:album_delete' album.pk %}"><h4>Delete this album</h4></a>
         {% endfor %}
     {% endif %}
     {% if photos %}

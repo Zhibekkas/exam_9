@@ -4,6 +4,7 @@
  {% for photo in photos %}
      <div class="card" style="width: 25rem;">
       <img class="photo" src="{{ photo.picture.url }}" alt="photo">
+       {% include "partial/selected_photos.html" %}
      <div class="card-body">
          <p class="card-text"> Caption: {{ photo.caption }}</p>
          <p class="card-text"> Author: {{ photo.author.username }}</p>

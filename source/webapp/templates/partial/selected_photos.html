@@ -1,0 +1,18 @@
+{% load static %}
+<div>
+    {% if user.is_authenticated %}
+        <p class="select-counter" id="select-counter-{{ photo.pk }}">Selected: {{ photo.selected.count }}</p>
+        {% if user in photo.selected.all %}
+            <a class="select-link" data-photo-id="{{ photo.pk }}" href="{% url "webapp:unselect" photo.pk %}">Unselect</a>
+            <a class="select-link invisible" data-photo-id="{{ photo.pk }}" href="{% url "webapp:select" photo.pk %}">Select as special</a>
+        {% else %}
+            <a class="select-link invisible" data-photo-id="{{ photo.pk }}" href="{% url "webapp:unselect" photo.pk %}">Unselect</a>
+            <a class="select-link" data-photo-id="{{ photo.pk }}" href="{% url "webapp:select" photo.pk %}">select as special</a>
+        {% endif %}
+    {% endif %}
+</div>
+
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static "select.js" %}"></script>
+{% endblock scripts %}

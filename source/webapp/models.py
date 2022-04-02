@@ -16,6 +16,12 @@ class Photo(models.Model):
                               verbose_name="Album", null=True, blank=True, related_name='photos')
     is_private = models.BooleanField(default=False, verbose_name='Privacy')
 
+    selected = models.ManyToManyField(
+        User,
+        related_name="selected_photos"
+    )
+
+
     class Meta:
         verbose_name = "Photo"
         verbose_name_plural = "Photos"

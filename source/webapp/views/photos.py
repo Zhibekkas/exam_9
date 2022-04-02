@@ -1,6 +1,10 @@
+from http import HTTPStatus
+
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
 from webapp.models import Photo
 from webapp.forms import PhotoForm
@@ -22,6 +26,8 @@ class PhotoView(LoginRequiredMixin, DetailView):
         if Photo.objects.filter(is_private=True):
             author = self.object.author.all()
             context['author'] = author
+            selected_photos = self.object.selected.all()
+            context['selected_photos'] = selected_photos
         return context
 
 
@@ -62,3 +68,36 @@ class PhotoUpdateView(PermissionRequiredMixin, UpdateView):
 
     def has_permission(self):
         super().has_permission() and self.get_object().author == self.request.user
+
+
+class SelectedPhotoView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        photo = get_object_or_404(Photo, pk=kwargs.get("pk"))
+
+        if request.user in photo.selected.all():
+            return JsonResponse(
+                {"error": "This photo has already been selected"},
+                status=HTTPStatus.FORBIDDEN,
+            )
+
+        photo.selected.add(request.user)
+
+        return JsonResponse(
+            {"select_count": photo.selected.count()}
+        )
+
+
+class PhotoUnselectView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        photo = get_object_or_404(Photo, pk=kwargs.get("pk"))
+
+        if not photo.selected.filter(id=request.user.id).exists():
+            return JsonResponse(
+                {"error": "You have to select first"},
+                status=HTTPStatus.FORBIDDEN,
+            )
+
+        photo.selected.remove(request.user)
+        return JsonResponse(
+            {"select_count": photo.selected.count()}
+        )
