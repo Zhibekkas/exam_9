@@ -6,9 +6,9 @@
       <img class="photo" src="{{ photo.picture.url }}" alt="photo">
      <div class="card-body">
          <p class="card-text"> Caption: {{ photo.caption }}</p>
-         <p class="card-text"> Author: {{ photo.author }}</p>
+         <p class="card-text"> Author: {{ photo.author.username }}</p>
            {% if photo.album %}
-         <a href="#"><p class="card-text"> Album: {{ photo.album }}</p></a>
+         <a href="{% url 'webapp:album_view' photo.album.pk %}"><p class="card-text"> Album: {{ photo.album }}</p></a>
          {% endif %}
          <p class="card-text"> Date: {{ photo.created_at }}</p>
      <a href="{% url 'webapp:view' photo.pk %}"><h4>Details</h4></a>

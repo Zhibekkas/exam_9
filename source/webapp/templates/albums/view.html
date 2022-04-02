@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Album details {{ album.pk }}{% endblock %}
+{% block nav %}
+{% endblock %}
+{% block content %}
+    <p class="card-text"> Name: {{ album.name }}</p>
+           <p class="card-text"> Description: {{ album.description }}</p>
+    <a href="{% url 'webapp:album_update' album.pk %}"><h4>Edit</h4></a>
+     <a href="{% url 'webapp:album_delete' album.pk %}"><h4>Delete</h4></a>
+    {% if photos %}
+        {% for photo in photos %}
+          <img class="photo" src="{{ photo.picture.url }}" alt="photo">
+        {% endfor %}
+    {% endif %}
+{% endblock %}

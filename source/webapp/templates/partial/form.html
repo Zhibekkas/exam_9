@@ -1,20 +1,14 @@
-{% if not fields_only %}
-    {% csrf_token %}
-{% endif %}
-
+{% csrf_token %}
 {% for error in form.non_field_errors %}
-   <p class="text-danger">{{ error }}</p>
+   <p class="form-error">{{ error }}</p>
 {% endfor %}
-
 {% for field in form %}
-    <p><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
-    {% for error in field.errors %}
-        <p class="text-danger">{{ error }}</p>
-    {% endfor %}
-    {{ field }}
+   <p><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
+   {% for error in field.errors %}
+       <p class="form-error">{{ error }}</p>
+   {% endfor %}
+   <p>{{ field }}</p>
 {% endfor %}
-
-<br>
 {% if not fields_only %}
     <input type="submit" value={{ button_text|default:"Save" }} >
 {% endif %}

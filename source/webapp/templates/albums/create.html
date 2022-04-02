@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Create album{% endblock %}
+{% block nav %}{% endblock %}
+{% block content %}
+    <h1>Create New Album</h1>
+
+    <form method="post">
+        {% include "partial/form.html" with button_text="Add" %}
+    </form>
+{% endblock %}

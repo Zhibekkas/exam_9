@@ -11,12 +11,16 @@ class IndexView(ListView):
     model = Photo
     ordering = ['-created_at']
 
+
 class PhotoView(DetailView):
     template_name = 'photos/view.html'
     model = Photo
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if Photo.objects.filter(is_private=True):
+            author = self.object.author.all()
+            context['author'] = author
         return context
 
 
@@ -26,8 +30,13 @@ class PhotoCreateView(CreateView):
     template_name = "photos/photo_add.html"
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
+        response = super(PhotoCreateView, self).form_valid(form)
+        self.object.author.add(self.request.user)
+        return response
+
+    def get_success_url(self):
+        return reverse('webapp:view', kwargs={'pk': self.object.pk})
+
 
 class PhotoDeleteView(DeleteView):
     model = Photo
