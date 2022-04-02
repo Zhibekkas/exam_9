@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Photo details {{ product.pk }}{% endblock %}
+{% block nav %}
+{% endblock %}
+{% block content %}
+     <img class="photo" src="{{ photo.picture.url }}" alt="photo">
+    <p class="card-text"> Caption: {{ photo.caption }}</p>
+           {% if photo.album %}
+         <a href="#"><p class="card-text"> Album: {{ photo.album }}</p></a>
+         {% endif %}
+         <p class="card-text"> Date: {{ photo.created_at }}</p>
+         <a href="#"><p class="card-text"> Authors: {{ photo.author }}</p></a>
+{% endblock %}

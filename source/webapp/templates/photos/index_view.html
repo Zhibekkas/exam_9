@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 class="text-center">Photos</h1>
+ {% for photo in photos %}
+     <div class="card" style="width: 25rem;">
+      <img class="photo" src="{{ photo.picture.url }}" alt="photo">
+     <div class="card-body">
+         <p class="card-text"> Caption: {{ photo.caption }}</p>
+         <p class="card-text"> Author: {{ photo.author }}</p>
+           {% if photo.album %}
+         <a href="#"><p class="card-text"> Album: {{ photo.album }}</p></a>
+         {% endif %}
+         <p class="card-text"> Date: {{ photo.created_at }}</p>
+     <a href="{% url 'webapp:view' photo.pk %}"><h4>Details</h4></a>
+      <a href="{% url 'webapp:edit_photo' photo.pk %}"><h4>Edit</h4></a>
+     <a href="{% url 'webapp:delete_photo' photo.pk %}"><h4>Delete</h4></a>
+  </div>
+</div>
+    {% endfor %}
+     </div>
+{% endblock %}

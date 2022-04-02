@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Update photo{% endblock %}
+{% block nav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'webapp:view' photo.pk%}">Back to photo</a>
+    </li>{% endblock %}
+{% block content %}
+    <h1>Update Photo</h1>
+    <form method="post">
+        {% include "partial/form.html" with button_text="Edit"  %}
+    </form>
+{% endblock %}
