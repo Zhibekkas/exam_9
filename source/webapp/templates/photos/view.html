@@ -4,6 +4,12 @@
 {% block nav %}
 {% endblock %}
 {% block content %}
+    {% if perms.webapp.change_photo %}
+      <a href="{% url 'webapp:edit_photo' photo.pk %}"><h4>Edit</h4></a>
+     {% endif %}
+      {% if perms.webapp.delete_photo %}
+     <a href="{% url 'webapp:delete_photo' photo.pk %}"><h4>Delete</h4></a>
+     {% endif %}
      <img class="photo" src="{{ photo.picture.url }}" alt="photo">
     <p class="card-text"> Caption: {{ photo.caption }}</p>
            {% if photo.album %}

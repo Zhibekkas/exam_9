@@ -12,8 +12,12 @@
          {% endif %}
          <p class="card-text"> Date: {{ photo.created_at }}</p>
      <a href="{% url 'webapp:view' photo.pk %}"><h4>Details</h4></a>
+      {% if perms.webapp.change_photo %}
       <a href="{% url 'webapp:edit_photo' photo.pk %}"><h4>Edit</h4></a>
+     {% endif %}
+      {% if perms.webapp.delete_photo %}
      <a href="{% url 'webapp:delete_photo' photo.pk %}"><h4>Delete</h4></a>
+     {% endif %}
   </div>
 </div>
     {% endfor %}
