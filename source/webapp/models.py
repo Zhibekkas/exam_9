@@ -20,6 +20,7 @@ class Photo(models.Model):
         User,
         related_name="selected_photos"
     )
+    token = models.CharField(null=True, blank=True, max_length=200)
 
 
     class Meta:

@@ -131,3 +131,9 @@ MEDIA_URL = "media/"
 LOGOUT_REDIRECT_URL = 'webapp:index'
 LOGIN_REDIRECT_URL = 'webapp:index'
 LOGIN_URL = 'accounts:login'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}

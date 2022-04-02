@@ -21,4 +21,11 @@
          <a href="{% url 'accounts:detail' user.pk %}"><p class="card-text"> Users who selected: {{ a.username }}</p></a>
         {% endfor %}
     {% endif %}
+    {% if photo.author == user %}
+    {% if photo.token == None %}
+        <a href="{% url 'webapp:photo_token' photo.pk %}"><p class="card-text"> Generate your token</p></a>
+        {% else %}
+        <a href="{% url 'webapp:token_link' photo.token %}"><p class="card-text">http://localhost:8000/photo/{{ photo.token }}/token/</p></a>
+    {% endif %}
+    {% endif %}
 {% endblock %}

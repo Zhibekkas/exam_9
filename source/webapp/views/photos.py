@@ -1,8 +1,9 @@
+import uuid
 from http import HTTPStatus
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
@@ -101,3 +102,20 @@ class PhotoUnselectView(LoginRequiredMixin, View):
         return JsonResponse(
             {"select_count": photo.selected.count()}
         )
+
+
+class PhotoTokenView(View):
+    def get(self, request, *args, **kwargs):
+        photo = get_object_or_404(Photo, pk=kwargs['pk'])
+        token = uuid.uuid4()
+        photo.token = token
+        photo.save()
+        return redirect('webapp:view', photo.pk)
+
+class TokenLinkView(View):
+    def get(self, request, *args, **kwargs):
+        photo = get_object_or_404(Photo, token = kwargs['token'])
+        context = {
+            'photo': photo
+        }
+        return render(request, 'photos/view.html', context)
