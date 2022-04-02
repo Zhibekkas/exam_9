@@ -6,7 +6,7 @@
     </li>{% endblock %}
 {% block content %}
     <h1>Update Photo</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% include "partial/form.html" with button_text="Edit"  %}
     </form>
 {% endblock %}
